@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewTab - SimpleSearch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="search-container">
+            <img src="svgs/search.svg" alt="Search" class="search-icon">
+            <input type="text" id="searchInput" placeholder="Enter your search query...">
+            <button id="searchButton">Search</button>
+        </div>
+        <div class="engine-container">
+            <label class="engine-option" data-engine="Google">
+                <input type="radio" name="searchEngine" value="google" checked>
+                <div class="engine-label">
+                    <img src="svgs/engines/google.svg" alt="Google">
+                </div>
+            </label>
+            <label class="engine-option" data-engine="Baidu">
+                <input type="radio" name="searchEngine" value="baidu">
+                <div class="engine-label">
+                    <img src="svgs/engines/baidu.svg" alt="Baidu">
+                </div>
+            </label>
+            <label class="engine-option" data-engine="Bing">
+                <input type="radio" name="searchEngine" value="bing">
+                <div class="engine-label">
+                    <img src="svgs/engines/bing.svg" alt="Bing">
+                </div>
+            </label>
+            <label class="engine-option" data-engine="DuckDuckGo">
+                <input type="radio" name="searchEngine" value="duckduckgo">
+                <div class="engine-label">
+                    <img src="svgs/engines/duckduckgo.svg" alt="DuckDuckGo">
+                </div>
+            </label>
+            <div class="engine-separator"></div>
+            <label class="engine-option" data-engine="Perplexity.ai">
+                <input type="radio" name="searchEngine" value="perplexity">
+                <div class="engine-label">
+                    <img src="svgs/engines/perplexity.svg" alt="Perplexity">
+                </div>
+            </label>
+            <label class="engine-option" data-engine="Metaso">
+                <input type="radio" name="searchEngine" value="metaso">
+                <div class="engine-label">
+                    <img src="svgs/engines/metaso.svg" alt="Metaso">
+                </div>
+            </label>
+        </div>
+    </div>
+    <div id="favorites">
+        <a href="https://github.com" target="_blank" class="favorite-option" data-favorite="GitHub">
+            <div class="favorite-label">
+                <img src="svgs/favorites/github.svg" alt="GitHub">
+            </div>
+        </a>
+        <a href="https://mail.google.com" target="_blank" class="favorite-option" data-favorite="Gmail">
+            <div class="favorite-label">
+                <img src="svgs/favorites/gmail.svg" alt="Gmail">
+            </div>
+        </a>
+        <a href="https://chatgpt.com" target="_blank" class="favorite-option" data-favorite="ChatGPT">
+            <div class="favorite-label">
+                <img src="svgs/favorites/chatgpt.svg" alt="ChatGPT">
+            </div>
+        </a>
+    </div>
+    <div id="color-palette">
+        <img src="svgs/color.svg" alt="Color Palette" class="color-palette-icon">
+        <div id="color-picker">
+            <div class="color-option" data-color="default"></div>
+            <div class="color-option" data-color="light"></div>
+            <div class="color-option" data-color="purple"></div>
+            <div class="color-option" data-color="blue"></div>
+            <div class="color-option" data-color="teal"></div>
+            <div class="color-option" data-color="green"></div>
+            <div class="color-option" data-color="orange"></div>
+            <div class="color-option" data-color="pink"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
