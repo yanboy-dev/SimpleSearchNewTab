@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SimpleSearchNewTab",
-  "version": "1.0",
+  "version": "2.0",
   "description": "A minimalist Chrome extension that replaces the default new tab page with a sleek search interface.",
   "permissions": ["storage"],
   "chrome_url_overrides": {
@@ -12,17 +12,5 @@
       "svgs/engines/*.svg"
     ],
     "matches": ["<all_urls>"]
-  }],
-  "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
-  },
-  "action": {
-    "default_icon": {
-      "16": "icon.png",
-      "48": "icon.png",
-      "128": "icon.png"
-    }
-  }
+  }]
 }

@@ -4,6 +4,8 @@
 
 A sleek and minimalist Chrome extension that transforms your new tab page into an elegant search interface.
 
+> This extension also works normally on Microsoft Edge browser
+
 ## Key Features
 
 - Multi-engine search capability:
@@ -14,12 +16,13 @@ A sleek and minimalist Chrome extension that transforms your new tab page into a
   - [Perplexity.ai](https://www.perplexity.ai)
   - [Metaso](https://metaso.cn)
 - Double-click functionality to open search engine homepages
+- Show or disable search history
 - Quick access shortcuts to popular services:
   - [GitHub](https://github.com)
   - [Gmail](https://mail.google.com)
   - [ChatGPT](https://chatgpt.com)
 - Customizable color themes to suit your preferences
-
+- Completely hide all elements except the search area
 
 ## Installation
 
@@ -30,7 +33,6 @@ A sleek and minimalist Chrome extension that transforms your new tab page into a
 5. Select the folder containing the extension files.
 
 The SimpleSearchNewTab extension should now be installed and activated. Open a new tab and enjoy the new search experience!
-
 
 ## License
 
