@@ -129,8 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const historyEnabledIcon = historyToggle.querySelector('.history-enabled-icon');
         const historyDisabledIcon = historyToggle.querySelector('.history-disabled-icon');
 
-        console.log(historyEnabledIcon.hidden, historyDisabledIcon.hidden)
-
         historyEnabledIcon.hidden = !isHistoryEnabled;
         historyDisabledIcon.hidden  = isHistoryEnabled;
         
