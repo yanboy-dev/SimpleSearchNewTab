@@ -445,7 +445,7 @@ body[class^="theme-"] .favorite-option::after {
 }
 
 .search-history.active {
-    max-height: 300px;
+    max-height: 180px;
     padding-top: 10px;
     padding-bottom: 5px;
     margin-top: 10px;
@@ -728,3 +728,4 @@ body[class^="theme-"] #visibility-toggle::after {
     background-color: var(--theme-color-dark);
     color: var(--color-white);
 }
+

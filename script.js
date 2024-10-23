@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const MAX_SEARCH_HISTORY = 20;
-    const DISPLAY_SEARCH_HISTORY_COUNT = 5;
+    const MAX_SEARCH_HISTORY = 100;
 
     // DOM elements
     const searchInput = document.getElementById('searchInput');
@@ -147,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displaySearchHistory() {
         searchHistory.innerHTML = '';
-        searchHistoryArray.slice(0, DISPLAY_SEARCH_HISTORY_COUNT).forEach((query, index) => {
+        searchHistoryArray.forEach((query, index) => {
             const item = document.createElement('div');
             item.className = 'search-history-item';
             item.innerHTML = `

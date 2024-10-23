@@ -4,7 +4,7 @@
 
 A sleek and minimalist Chrome extension that transforms your new tab page into an elegant search interface.
 
-> This extension also works normally on Microsoft Edge browser
+> This extension also works well on Microsoft Edge browser
 
 ## Key Features
 
@@ -26,9 +26,16 @@ A sleek and minimalist Chrome extension that transforms your new tab page into a
 
 ## Installation
 
+#### Available in the extension store
+
+-  [Google Chrome Web Store](https://chromewebstore.google.com/detail/simplesearchnewtab/abmnkkhjkinffcldoaihgdkegaheaigm)
+-  [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/simplesearchnewtab/cefppiicdgbodalbbfakcljdomjoaned)
+
+#### Developer mode
+
 1. Download the ZIP file of this repository or clone it to your local machine.
-2. Open Google Chrome browser and navigate to the extensions page (chrome://extensions/).
-3. Enable "Developer mode" in the top right corner.
+2. Open Google Chrome / Microsoft Edge and navigate to the extensions page.
+3. Enable "Developer mode".
 4. Click on the "Load unpacked" button in the top left corner.
 5. Select the folder containing the extension files.
 
