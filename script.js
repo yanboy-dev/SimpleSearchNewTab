@@ -2,25 +2,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const MAX_SEARCH_HISTORY = 100;
 
     // DOM elements
-    const searchInput = document.getElementById('searchInput');
-    const searchButton = document.getElementById('searchButton');
-    const engineOptions = document.querySelectorAll('.engine-option');
-    const colorOptions = document.querySelectorAll('.color-option');
-    const body = document.body;
-    const searchHistory = document.getElementById('searchHistory');
-    const historyToggle = document.getElementById('history-toggle');
-    const visibilityToggle = document.getElementById('visibility-toggle');
-    const favorites = document.getElementById('favorites');
-    const settings = document.getElementById('settings');
+    const elements = {
+        searchInput: document.getElementById('searchInput'),
+        searchButton: document.getElementById('searchButton'),
+        engineOptions: document.querySelectorAll('.engine-option'),
+        colorOptions: document.querySelectorAll('.color-option'),
+        body: document.body,
+        searchHistory: document.getElementById('searchHistory'),
+        historyToggle: document.getElementById('history-toggle'),
+        visibilityToggle: document.getElementById('visibility-toggle'),
+    };
 
     // Search engine data
     const engineData = {
-        'google': { homepage: 'https://www.google.com', searchUrl: 'https://www.google.com/search?q=' },
-        'baidu': { homepage: 'https://www.baidu.com', searchUrl: 'https://www.baidu.com/s?wd=' },
-        'bing': { homepage: 'https://www.bing.com', searchUrl: 'https://www.bing.com/search?q=' },
-        'duckduckgo': { homepage: 'https://duckduckgo.com', searchUrl: 'https://duckduckgo.com/?q=' },
-        'perplexity': { homepage: 'https://www.perplexity.ai', searchUrl: 'https://www.perplexity.ai/?q=' },
-        'metaso': { homepage: 'https://metaso.cn', searchUrl: 'https://metaso.cn/?q=' }
+        google: { homepage: 'https://www.google.com', searchUrl: 'https://www.google.com/search?q=' },
+        baidu: { homepage: 'https://www.baidu.com', searchUrl: 'https://www.baidu.com/s?wd=' },
+        bing: { homepage: 'https://www.bing.com', searchUrl: 'https://www.bing.com/search?q=' },
+        duckduckgo: { homepage: 'https://duckduckgo.com', searchUrl: 'https://duckduckgo.com/?q=' },
+        perplexity: { homepage: 'https://www.perplexity.ai', searchUrl: 'https://www.perplexity.ai/?q=' },
+        metaso: { homepage: 'https://metaso.cn', searchUrl: 'https://metaso.cn/?q=' }
     };
 
     // Theme colors
@@ -41,21 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
     let isVisible = localStorage.getItem('isVisible') !== 'false';
 
     // Event listeners
-    searchButton.addEventListener('click', performSearch);
-    searchInput.addEventListener('keypress', e => e.key === 'Enter' && performSearch());
-    historyToggle.addEventListener('click', toggleHistory);
-    visibilityToggle.addEventListener('click', toggleVisibility);
+    elements.searchButton.addEventListener('click', performSearch);
+    elements.searchInput.addEventListener('keypress', e => e.key === 'Enter' && performSearch());
+    elements.historyToggle.addEventListener('click', toggleHistory);
+    elements.visibilityToggle.addEventListener('click', toggleVisibility);
 
     // Setup functions
     function setupEngineOptions() {
-        engineOptions.forEach(option => {
+        elements.engineOptions.forEach(option => {
             const radio = option.querySelector('input[type="radio"]');
             const label = option.querySelector('.engine-label');
             
-            if (radio.value === selectedEngine) {
-                radio.checked = true;
-            }
-            
+            radio.checked = radio.value === selectedEngine;
+
             label.addEventListener('click', e => {
                 e.preventDefault();
                 radio.checked = true;
@@ -81,10 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Search function
     function performSearch() {
-        const query = searchInput.value.trim();
+        const query = elements.searchInput.value.trim();
         if (query) {
             addToSearchHistory(query);
-            const selectedEngine = Array.from(engineOptions).find(option => option.querySelector('input[type="radio"]').checked);
+            const selectedEngine = Array.from(elements.engineOptions).find(option => option.querySelector('input[type="radio"]').checked);
             if (selectedEngine) {
                 const engineValue = selectedEngine.querySelector('input[type="radio"]').value;
                 const searchUrl = engineData[engineValue]?.searchUrl;
@@ -105,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initTheme() {
         const savedTheme = localStorage.getItem('selectedTheme');
         if (savedTheme) {
-            savedTheme !== 'default' && body.classList.add(`theme-${savedTheme}`);
+            savedTheme !== 'default' && elements.body.classList.add(`theme-${savedTheme}`);
             updateThemeColors(savedTheme);
         }
     }
@@ -119,93 +117,115 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isHistoryEnabled) {
             searchHistoryArray = [];
             localStorage.removeItem('searchHistory');
-            searchHistory.innerHTML = '';
-            searchHistory.classList.remove('active');
+            elements.searchHistory.innerHTML = '';
+            elements.searchHistory.classList.remove('active');
         }
     }
 
     function updateHistoryToggleIcon() {
-        const historyEnabledIcon = historyToggle.querySelector('.history-enabled-icon');
-        const historyDisabledIcon = historyToggle.querySelector('.history-disabled-icon');
+        const historyEnabledIcon = elements.historyToggle.querySelector('.history-enabled-icon');
+        const historyDisabledIcon = elements.historyToggle.querySelector('.history-disabled-icon');
 
         historyEnabledIcon.hidden = !isHistoryEnabled;
         historyDisabledIcon.hidden  = isHistoryEnabled;
         
-        historyToggle.setAttribute('data-tooltip', isHistoryEnabled ? 'Disable Search History' : 'Enable Search History');
+        elements.historyToggle.setAttribute('data-tooltip', isHistoryEnabled ? 'Disable Search History' : 'Enable Search History');
     }
 
     function addToSearchHistory(query) {
         if (!isHistoryEnabled) return;
 
         const index = searchHistoryArray.indexOf(query);
-        index !== -1 && searchHistoryArray.splice(index, 1);
+        if (index !== -1) searchHistoryArray.splice(index, 1);
         searchHistoryArray.unshift(query);
-        searchHistoryArray.length > MAX_SEARCH_HISTORY && searchHistoryArray.pop();
+        if (searchHistoryArray.length > MAX_SEARCH_HISTORY) searchHistoryArray.pop();
         localStorage.setItem('searchHistory', JSON.stringify(searchHistoryArray));
     }
 
     function displaySearchHistory() {
-        searchHistory.innerHTML = '';
+        elements.searchHistory.innerHTML = '';
         searchHistoryArray.forEach((query, index) => {
-            const item = document.createElement('div');
-            item.className = 'search-history-item';
-            item.innerHTML = `
-                <img src="svgs/history.svg" alt="History" class="search-history-icon">
-                <span class="search-history-text">${query}</span>
-                <button class="delete-history-item" data-index="${index}">
-                    <img src="svgs/delete.svg" alt="Delete" class="delete-icon">
-                </button>
-            `;
-            item.querySelector('.search-history-text').addEventListener('click', () => {
-                searchInput.value = query;
-                performSearch();
-            });
-            item.querySelector('.delete-history-item').addEventListener('click', e => {
-                e.stopPropagation();
-                e.preventDefault();
-                deleteHistoryItem(index);
-            });
-            searchHistory.insertBefore(item, searchHistory.firstChild);
+            const item = createHistoryItem(query, index);
+            elements.searchHistory.insertBefore(item, elements.searchHistory.firstChild);
         });
+
+        elements.searchHistory.scrollTop = elements.searchHistory.scrollHeight;
+    }
+
+    function createHistoryItem(query, index) {
+        const item = document.createElement('div');
+        item.className = 'search-history-item';
+        item.innerHTML = `
+            <img src="svgs/history.svg" alt="History" class="search-history-icon">
+            <span class="search-history-text">${query}</span>
+            <button class="delete-history-item" data-index="${index}">
+                <img src="svgs/delete.svg" alt="Delete" class="delete-icon">
+            </button>
+        `;
+        item.querySelector('.search-history-text').addEventListener('click', () => {
+            elements.searchInput.value = query;
+            performSearch();
+        });
+        item.querySelector('.delete-history-item').addEventListener('click', e => {
+            e.stopPropagation();
+            e.preventDefault();
+            deleteHistoryItem(index);
+        });
+        return item;
     }
 
     function deleteHistoryItem(index) {
         searchHistoryArray.splice(index, 1);
         localStorage.setItem('searchHistory', JSON.stringify(searchHistoryArray));
         displaySearchHistory();
-        searchHistoryArray.length > 0 ? searchHistory.classList.add('active') : searchHistory.classList.remove('active');
+        elements.searchHistory.classList.toggle('active', searchHistoryArray.length > 0);
     }
 
     // Setup color options
-    colorOptions.forEach(option => {
+    elements.colorOptions.forEach(option => {
         option.addEventListener('click', function() {
             const color = this.getAttribute('data-color');
-            body.className = color !== 'default' ? `theme-${color}` : '';
+            elements.body.className = color !== 'default' ? `theme-${color}` : '';
             updateThemeColors(color);
             localStorage.setItem('selectedTheme', color);
         });
     });
 
     // Search input event listeners
-    searchInput.addEventListener('focus', () => {
+    elements.searchInput.addEventListener('focus', () => {
         if (searchHistoryArray.length > 0) {
             displaySearchHistory();
-            requestAnimationFrame(() => searchHistory.classList.add('active'));
+            requestAnimationFrame(() => elements.searchHistory.classList.add('active'));
         }
     });
 
-    searchInput.addEventListener('input', () => {
-        if (searchInput.value.trim() === '') {
+    elements.searchInput.addEventListener('input', () => {
+        const query = elements.searchInput.value.trim().toLowerCase();
+        if (query === '') {
             if (isHistoryEnabled && searchHistoryArray.length > 0) {
                 displaySearchHistory();
-                requestAnimationFrame(() => searchHistory.classList.add('active'));
+                requestAnimationFrame(() => elements.searchHistory.classList.add('active'));
             } else {
-                searchHistory.classList.remove('active');
+                elements.searchHistory.classList.remove('active');
             }
         } else {
-            searchHistory.classList.remove('active');
+            const filteredHistory = searchHistoryArray.filter(item => item.toLowerCase().includes(query));
+            displayFilteredHistory(filteredHistory);
         }
     });
+
+    function displayFilteredHistory(filteredHistory) {
+        elements.searchHistory.innerHTML = '';
+        filteredHistory.forEach((query, index) => {
+            const item = createHistoryItem(query, index);
+            elements.searchHistory.insertBefore(item, elements.searchHistory.firstChild);
+        });
+
+        elements.searchHistory.classList.toggle('active', filteredHistory.length > 0);
+        if (filteredHistory.length > 0) {
+            elements.searchHistory.scrollTop = elements.searchHistory.scrollHeight;
+        }
+    }
 
     // Initialize
     setupEngineOptions();
@@ -217,8 +237,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Global click event listener
     document.addEventListener('click', e => {
-        if (!searchHistory.contains(e.target) && e.target !== searchInput) {
-            searchHistory.classList.remove('active');
+        if (!elements.searchHistory.contains(e.target) && e.target !== elements.searchInput) {
+            elements.searchHistory.classList.remove('active');
         }
     });
 
@@ -230,13 +250,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateVisibilityToggleIcon() {
-        const visibilityEnabledIcon = visibilityToggle.querySelector('.visibility-enabled-icon');
-        const visibilityDisabledIcon = visibilityToggle.querySelector('.visibility-disabled-icon');
+        const visibilityEnabledIcon = elements.visibilityToggle.querySelector('.visibility-enabled-icon');
+        const visibilityDisabledIcon = elements.visibilityToggle.querySelector('.visibility-disabled-icon');
 
         visibilityEnabledIcon.hidden = !isVisible;
         visibilityDisabledIcon.hidden = isVisible;
         
-        visibilityToggle.setAttribute('data-tooltip', isVisible ? 'Hide bottom bar' : 'Show bottom bar');
+        elements.visibilityToggle.setAttribute('data-tooltip', isVisible ? 'Hide bottom bar' : 'Show bottom bar');
     }
 
     function initVisibility() {

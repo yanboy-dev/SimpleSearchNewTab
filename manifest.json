@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SimpleSearchNewTab",
-  "version": "2.2",
+  "version": "2.3",
   "description": "A minimalist browser extension that replaces the default new tab page with a sleek search interface.",
   "chrome_url_overrides": {
     "newtab": "index.html"
